@@ -1,0 +1,6 @@
+version: 2
+
+groups:
+  - name: ProdGrp
+    owner:
+      name: ProdGrp

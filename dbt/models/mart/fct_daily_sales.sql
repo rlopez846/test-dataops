@@ -10,7 +10,7 @@ products AS (
 order_items AS (
     SELECT * FROM {{ ref('stg_order_items') }}
     --LIMIT 100
-    WHERE order_id in (6644, 30084, 3621, 3622, 3623, 3624)
+    --WHERE order_id in (6644, 30084, 3621, 3622, 3623, 3624)
 ),
 
 orders_ext as (
@@ -50,22 +50,24 @@ daily_orders AS (
         SUM(num_of_item) AS total_items,
         SUM(order_value) AS total_revenue,
         SUM(order_value) / COUNT(order_id) AS average_order_value,
-
+        SUM(order_value) / SUM(num_of_item) AS average_item_price
     FROM orders_ext
     GROUP BY user_id, order_created_at_day
 ),
 
 final AS (
     SELECT
+        {{ dbt_utils.generate_surrogate_key(['orders_ext.user_id', 'order_items.product_id', 'orders_ext.user_created_at_date']) }} AS sales_sk,
         orders_ext.user_id,
         order_items.product_id,
-        --products.category, -- should be left outside in the dimension
+        --orders_ext.order_created_at,
         orders_ext.order_created_at_day,
         daily_orders.orders_count,
         daily_orders.total_items, --daily_user_total_items
         COUNT(DISTINCT order_items.order_item_id) AS quantity,
+        order_items.sale_price,
         SUM(order_items.sale_price) AS item_revenue,
-        SUM(order_items.sale_price) / COUNT(DISTINCT order_items.order_item_id) AS average_item_price,
+        daily_orders.average_item_price,
         daily_orders.total_revenue,
         daily_orders.average_order_value,
     FROM order_items
@@ -79,10 +81,11 @@ final AS (
     GROUP BY
         orders_ext.user_id,
         order_items.product_id,
-        products.category,
+        --orders_ext.order_created_at,
         orders_ext.order_created_at_day,
         daily_orders.orders_count,
         daily_orders.total_items,
+        order_items.sale_price,
         daily_orders.total_revenue,
         daily_orders.average_order_value
 )

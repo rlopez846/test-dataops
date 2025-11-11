@@ -1,0 +1,58 @@
+version: 2
+
+models:
+    - name: dim_customer
+      description: "Dimension de cliente, con país, genero y fecha de registro"
+      columns:
+          - name: customer_sk
+            description: "Llave primaria"
+            tests:
+              - unique
+              - not_null
+      tests:
+        - dbt_utils.unique_combination_of_columns:
+            combination_of_columns:
+              - user_id
+              - country
+              - gender
+              - user_created_at
+      config:
+        group: ProdGrp
+        meta:
+          model_maturity: in dev
+    - name: dim_product
+      description: "Dimension de producto, con categoría y precios promedio"
+      columns:
+          - name: product_id
+            description: "Llave primaria"
+            tests:
+              - unique
+              - not_null
+      config:
+        group: ProdGrp
+        meta:
+          model_maturity: in dev
+    - name: fact_order_items
+      description: "Detalle de ventas"
+      #columns:
+      #    - name: sales_sk
+      #      description: "Llave primaria"
+      #      tests:
+      #        - unique
+      #        - not_null
+      config:
+        group: ProdGrp
+        meta:
+          model_maturity: in dev
+    - name: fct_daily_sales
+      description: "Resumen diario de ventas y comportamiento del cliente"
+      columns:
+          - name: sales_sk
+            description: "Llave primaria"
+            tests:
+              - unique
+              - not_null
+      config:
+        group: ProdGrp
+        meta:
+          model_maturity: in dev
