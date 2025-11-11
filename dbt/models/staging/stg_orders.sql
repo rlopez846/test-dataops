@@ -1,5 +1,5 @@
 WITH source AS (
-    SELECT * FROM `bigquery-public-data.thelook_ecommerce.orders`
+    SELECT * FROM {{ source('thelook_ecommerce', 'orders') }}
     --LIMIT 10
 ),
 
@@ -9,11 +9,11 @@ renamed AS (
         user_id,
         `status`,
         gender AS order_gender,
-        TIMESTAMP(created_at) AS order_created_at,
-        TIMESTAMP(returned_at) AS returned_at,
-        TIMESTAMP(shipped_at) AS shipped_at,
-        TIMESTAMP(delivered_at) AS delivered_at,
-        num_of_item
+        CAST(created_at AS TIMESTAMP) AS order_created_at,
+        CAST(returned_at AS TIMESTAMP) AS returned_at,
+        CAST(shipped_at AS TIMESTAMP) AS shipped_at,
+        CAST(delivered_at AS TIMESTAMP) AS delivered_at,
+        CAST(num_of_item AS NUMERIC) AS num_of_item
     FROM source
 )
 

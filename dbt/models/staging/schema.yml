@@ -2,7 +2,7 @@ version: 2
 
 models:
     - name: stg_users
-      description: "users description"
+      description: "Contains all the users and their data"
       columns:
           - name: user_id
             description: "The primary key for this table"
@@ -11,10 +11,10 @@ models:
               - not_null
       config:
         meta:
-          owner: "@someone"
+          owner: "StgGrp"
           model_maturity: in dev
     - name: stg_orders
-      description: "orders description"
+      description: "Contains the general order data without the items"
       columns:
           - name: order_id
             description: "The primary key for this table"
@@ -22,7 +22,7 @@ models:
               - unique
               - not_null
           - name: user_id
-            description: "user_id description"
+            description: "User that did the order"
             tests:
               - not_null
               - relationships:
@@ -30,14 +30,18 @@ models:
                     to: ref('stg_users')
                     field: user_id
           - name: status
-            description: "status description"
+            description: "Order status"
             data_tests:
               - accepted_values:
                   arguments:
                     # Aparte de estos la BD tiene 'Processing' y 'Shipped'
                     values: ['Complete', 'Cancelled', 'Returned']
+      config:
+      meta:
+        owner: "StgGrp"
+        model_maturity: in dev
     - name: stg_order_items
-      description: "order_items description"
+      description: "list or items, one by one, that are part of an order"
       columns:
           - name: order_item_id
             description: "The primary key for this table"
@@ -45,7 +49,7 @@ models:
               - unique
               - not_null
           - name: order_id
-            description: "order_id description"
+            description: "Order for which this item belongs"
             tests:
               # Unique se usa porque la cantidad esta en ordenes por lo que debe de ser unico de lo contrario la relacion no tiene sentido
               #- unique
@@ -55,18 +59,26 @@ models:
                     to: ref('stg_orders')
                     field: order_id
           - name: product_id
-            description: "product_id description"
+            description: "Type of product of this item"
             tests:
               - not_null
               - relationships:
                   arguments:
                     to: ref('stg_products')
                     field: product_id
+      config:
+        meta:
+          owner: "StgGrp"
+          model_maturity: in dev
     - name: stg_products
-      description: "products description"
+      description: "Products and their data"
       columns:
         - name: product_id
           description: "The primary key for this table"
           tests:
             - unique
             - not_null
+      config:
+        meta:
+          owner: "StgGrp"
+          model_maturity: in dev

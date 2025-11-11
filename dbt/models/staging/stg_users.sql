@@ -1,5 +1,5 @@
 WITH source AS (
-    SELECT * FROM `bigquery-public-data.thelook_ecommerce.users`
+    SELECT * FROM {{ source('thelook_ecommerce', 'users') }}
     --LIMIT 10
 ),
 
@@ -9,17 +9,17 @@ renamed AS (
         first_name,
         last_name,
         email,
-        age,
+        CAST(age AS NUMERIC) AS age,
         gender,
         `state` AS user_state,
         street_address,
         postal_code,
         city,
         country,
-        latitude,
-        longitude,
+        CAST(latitude AS NUMERIC) AS latitude,
+        CAST(longitude AS NUMERIC) AS longitude,
         traffic_source,
-        TIMESTAMP(created_at) AS user_created_at,
+        CAST(created_at AS TIMESTAMP) AS user_created_at,
         user_geom
     FROM source
 )

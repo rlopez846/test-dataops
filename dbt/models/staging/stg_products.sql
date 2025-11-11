@@ -1,16 +1,16 @@
 WITH source AS (
-    SELECT * FROM `bigquery-public-data.thelook_ecommerce.products`
+    SELECT * FROM {{ source('thelook_ecommerce', 'products') }}
     --LIMIT 10
 ),
 
 renamed AS (
     SELECT
         id AS product_id,
-        cost,
+        CAST(cost AS NUMERIC),
         category,
         `name` AS product_name,
         brand,
-        retail_price,
+        CAST(retail_price AS NUMERIC) AS retail_price,
         department,
         sku,
         distribution_center_id
