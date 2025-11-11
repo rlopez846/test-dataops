@@ -6,7 +6,7 @@ WITH source AS (
 renamed AS (
     SELECT
         id AS product_id,
-        CAST(cost AS NUMERIC),
+        CAST(cost AS NUMERIC) AS cost,
         category,
         `name` AS product_name,
         brand,

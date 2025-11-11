@@ -23,7 +23,7 @@ modified AS (
         CAST(user_created_at AS DATE) AS user_created_at_date,
         user_geom
     FROM users
-)
+),
 
 final AS (
     SELECT DISTINCT
