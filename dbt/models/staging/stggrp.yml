@@ -1,0 +1,10 @@
+version: 2
+
+groups:
+  - name: stggrp
+    owner:
+      name: StgGrp
+    #description: Staging Group
+    #config:
+    #  meta:
+    #    data_owner: Finance team
