@@ -1,15 +1,18 @@
-ITH orders AS (
+WITH orders AS (
     SELECT * FROM {{ ref('stg_orders') }}
     
 ),
+
 products AS (
     SELECT * FROM {{ ref('stg_products') }}
 ),
+
 order_items AS (
     SELECT * FROM {{ ref('stg_order_items') }}
     --LIMIT 100
     WHERE order_id in (6644, 30084, 3621, 3622, 3623, 3624)
 ),
+
 orders_ext as (
     SELECT
         orders.order_id,
@@ -38,6 +41,7 @@ orders_ext as (
         orders.delivered_at,
         orders.num_of_item
 ),
+
 daily_orders AS (
     SELECT
         user_id,
@@ -50,6 +54,7 @@ daily_orders AS (
     FROM orders_ext
     GROUP BY user_id, order_created_at_day
 ),
+
 final AS (
     SELECT
         orders_ext.user_id,
@@ -81,6 +86,5 @@ final AS (
         daily_orders.total_revenue,
         daily_orders.average_order_value
 )
-SELECT
-    *
-FROM final
+
+SELECT * FROM final
