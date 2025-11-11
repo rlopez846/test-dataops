@@ -34,12 +34,12 @@ models:
           model_maturity: in dev
     - name: fact_order_items
       description: "Detalle de ventas"
-      #columns:
-      #    - name: sales_sk
-      #      description: "Llave primaria"
-      #      tests:
-      #        - unique
-      #        - not_null
+      columns:
+          - name: order_items_sk
+            description: "Llave primaria"
+            tests:
+              - unique
+              - not_null
       config:
         group: ProdGrp
         meta:
@@ -52,6 +52,12 @@ models:
             tests:
               - unique
               - not_null
+      tests:
+        - equals_product_of:
+          arguments:
+            a: item_revenue
+            b: quantity
+            c: sale_price
       config:
         group: ProdGrp
         meta:
