@@ -1,0 +1,72 @@
+version: 2
+
+models:
+    - name: stg_users
+      description: "users description"
+      columns:
+          - name: user_id
+            description: "The primary key for this table"
+            tests:
+              - unique
+              - not_null
+      config:
+        meta:
+          owner: "@someone"
+          model_maturity: in dev
+    - name: stg_orders
+      description: "orders description"
+      columns:
+          - name: order_id
+            description: "The primary key for this table"
+            tests:
+              - unique
+              - not_null
+          - name: user_id
+            description: "user_id description"
+            tests:
+              - not_null
+              - relationships:
+                  arguments:
+                    to: ref('users')
+                    field: user_id
+          - name: status
+            description: "status description"
+            data_tests:
+              - accepted_values:
+                  arguments:
+                    # Aparte de estos la BD tiene 'Processing' y 'Shipped'
+                    values: ['Complete', 'Cancelled', 'Returned']
+    - name: stg_order_items
+      description: "order_items description"
+      columns:
+          - name: order_item_id
+            description: "The primary key for this table"
+            tests:
+              - unique
+              - not_null
+          - name: order_id
+            description: "order_id description"
+            tests:
+              # Unique se usa porque la cantidad esta en ordenes por lo que debe de ser unico de lo contrario la relacion no tiene sentido
+              #- unique
+              - not_null
+              - relationships:
+                  arguments:
+                    to: ref('orders')
+                    field: order_id
+          - name: product_id
+            description: "product_id description"
+            tests:
+              - not_null
+              - relationships:
+                  arguments:
+                    to: ref('products')
+                    field: product_id
+    - name: stg_products
+      description: "products description"
+      columns:
+        - name: product_id
+          description: "The primary key for this table"
+          tests:
+            - unique
+            - not_null
