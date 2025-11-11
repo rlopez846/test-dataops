@@ -54,10 +54,10 @@ models:
               - not_null
       tests:
         - equals_product_of:
-          arguments:
-            a: item_revenue
-            b: quantity
-            c: sale_price
+            arguments:
+              a: item_revenue
+              b: quantity
+              c: sale_price
       config:
         group: ProdGrp
         meta:
