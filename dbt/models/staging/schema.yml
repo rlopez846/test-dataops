@@ -27,7 +27,7 @@ models:
               - not_null
               - relationships:
                   arguments:
-                    to: ref('users')
+                    to: ref('stg_users')
                     field: user_id
           - name: status
             description: "status description"
@@ -52,7 +52,7 @@ models:
               - not_null
               - relationships:
                   arguments:
-                    to: ref('orders')
+                    to: ref('stg_orders')
                     field: order_id
           - name: product_id
             description: "product_id description"
@@ -60,7 +60,7 @@ models:
               - not_null
               - relationships:
                   arguments:
-                    to: ref('products')
+                    to: ref('stg_products')
                     field: product_id
     - name: stg_products
       description: "products description"
