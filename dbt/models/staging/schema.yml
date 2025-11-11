@@ -37,9 +37,9 @@ models:
                     # Aparte de estos la BD tiene 'Processing' y 'Shipped'
                     values: ['Complete', 'Cancelled', 'Returned']
       config:
-      meta:
-        owner: "StgGrp"
-        model_maturity: in dev
+        meta:
+          owner: "StgGrp"
+          model_maturity: in dev
     - name: stg_order_items
       description: "list or items, one by one, that are part of an order"
       columns:
