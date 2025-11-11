@@ -10,7 +10,7 @@ models:
               - unique
               - not_null
       config:
-        group: stggrp
+        group: StgGrp
         meta:
           model_maturity: in dev
     - name: stg_orders
@@ -37,7 +37,7 @@ models:
                     # Aparte de estos la BD tiene 'Processing' y 'Shipped'
                     values: ['Complete', 'Cancelled', 'Returned']
       config:
-        group: stggrp
+        group: StgGrp
         meta:
           model_maturity: in dev
     - name: stg_order_items
@@ -67,7 +67,7 @@ models:
                     to: ref('stg_products')
                     field: product_id
       config:
-        group: stggrp
+        group: StgGrp
         meta:
           model_maturity: in dev
     - name: stg_products
@@ -79,6 +79,6 @@ models:
             - unique
             - not_null
       config:
-        group: stggrp
+        group: StgGrp
         meta:
           model_maturity: in dev
