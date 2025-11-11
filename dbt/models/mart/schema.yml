@@ -11,11 +11,12 @@ models:
               - not_null
       tests:
         - dbt_utils.unique_combination_of_columns:
-            combination_of_columns:
-              - user_id
-              - country
-              - gender
-              - user_created_at
+            arguments:
+              combination_of_columns:
+                - user_id
+                - country
+                - gender
+                - user_created_at
       config:
         group: ProdGrp
         meta:
