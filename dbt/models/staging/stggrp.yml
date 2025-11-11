@@ -2,5 +2,5 @@ version: 2
 
 groups:
   - name: StgGrp
-    #owner:
-    #  name: StgGrp
+    owner:
+      name: StgGrp
