@@ -6,6 +6,22 @@ sources:
     #schema: thelook_ecommerce
     tables:
       - name: order_items
+        config:
+          meta:
+            owner: "The Looker team"
+            model_maturity: production
       - name: orders
+        config:
+          meta:
+            owner: "The Looker team"
+            model_maturity: production
       - name: products
+        config:
+          meta:
+            owner: "The Looker team"
+            model_maturity: production
       - name: users
+        config:
+          meta:
+            owner: "The Looker team"
+            model_maturity: production
