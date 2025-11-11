@@ -57,7 +57,7 @@ daily_orders AS (
 
 final AS (
     SELECT
-        {{ dbt_utils.generate_surrogate_key(['orders_ext.user_id', 'order_items.product_id', 'orders_ext.user_created_at_date']) }} AS sales_sk,
+        {{ dbt_utils.generate_surrogate_key(['orders_ext.user_id', 'order_items.product_id', 'orders_ext.order_created_at_day']) }} AS sales_sk,
         orders_ext.user_id,
         order_items.product_id,
         --orders_ext.order_created_at,
@@ -86,6 +86,7 @@ final AS (
         daily_orders.orders_count,
         daily_orders.total_items,
         order_items.sale_price,
+        daily_orders.average_item_price,
         daily_orders.total_revenue,
         daily_orders.average_order_value
 )
